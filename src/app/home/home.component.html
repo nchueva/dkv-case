@@ -1,16 +1,12 @@
-<header>Welcome to the page</header>
-<main class="main">
-  <div class="content">
-    @for(car of cars$ | async; track car.id ){
-    <div class="card">
-      <img src="..." class="card-img-top" alt="vehicle-card" />
-      <div class="card-body">
-        <h5 class="card-title">{{ car.name }}</h5>
-        <p class="card-text">{{ car.model }}</p>
-        <a class="btn btn-primary">more</a>
-      </div>
+<div class="content">
+  @for(car of cars$ | async; track car.id ){
+  <div class="card">
+    <img src="..." class="card-img-top" alt="vehicle-card" />
+    <div class="card-body">
+      <h5 class="card-title">{{ car.name }}</h5>
+      <p class="card-text">{{ car.model }}</p>
+      <a class="btn btn-primary">more</a>
     </div>
-    }
   </div>
-</main>
-<footer></footer>
+  }
+</div>
