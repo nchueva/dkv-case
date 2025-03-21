@@ -11,11 +11,15 @@ body {
   flex-direction: column;
 }
 
+$color-bg: #002b56;
+
 header,
 footer {
-  height: 8rem;
-  background-color: #002b56;
-  color: invert($color: #002b56);
+  height: 4rem;
+  background-color: $color-bg;
+  color: invert($color: $color-bg);
+  display: flex;
+  flex-shrink: 0;
 }
 
 header {
