@@ -6,7 +6,7 @@ import { Vehicle } from '../models/vehicles';
 
 @Component({
   selector: 'app-home',
-  imports: [AsyncPipe, NgFor],
+  imports: [AsyncPipe],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
 })
