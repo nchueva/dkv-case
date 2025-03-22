@@ -1,0 +1,19 @@
+<div class="dkv-vehicle-grid">
+  <div class="dkv-car-image">
+    <img src="/three_cars.png" alt="vehicle image" />
+  </div>
+  <div class="dkv-car-description">
+    @if( car$ | async; as car) {
+    <h4>Name: {{ car.name }}</h4>
+    <div>Manufacturer: {{ car.manufacturer }}</div>
+    <div>Model: {{ car.model }}</div>
+    <div>Type: {{ car.type }}</div>
+    <div>Vin: {{ car.vin }}</div>
+    <div>Fuel: {{ car.fuel }}</div>
+    @if(car.color) {
+    <div>Color: {{ car.color }}</div>
+    } @if(car.mileage) {
+    <div>Mileage: {{ car.mileage }}</div>
+    } }
+  </div>
+</div>

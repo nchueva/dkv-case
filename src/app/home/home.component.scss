@@ -1,19 +1,61 @@
-.content {
-  display: grid;
+.dkv-home-content {
+  display: flex;
   width: 100%;
   height: 100%;
-  grid-template-columns: repeat(auto-fill, minmax(15rem, 30rem));
-  grid-template-rows: auto;
-  overflow: auto;
-  justify-content: center;
-  grid-gap: 2rem;
-  padding-block: 2rem;
-  padding-inline: 2rem;
+  flex-direction: column;
 }
 
-.truck-icon {
-  width: 18vh;
-  padding: 4vh;
-  opacity: 0.25;
-  align-self: center;
+.dkv-cards {
+  display: grid;
+  width: 100%;
+  grid-template-columns: repeat(auto-fill, minmax(15rem, 30rem));
+  grid-template-rows: max-content;
+  grid-gap: 2rem;
+  overflow: auto;
+  padding-block: 2rem;
+  justify-content: center;
+}
+
+.dkv-content-spacer {
+  padding-inline: 4rem; //???
+}
+
+.dkv-add-card {
+  grid-column: 1 / -1;
+}
+
+.dkv-card-image {
+  width: 100%;
+  height: 20rem;
+  object-fit: cover;
+  opacity: 0.85;
+}
+h5 {
+  color: #f18400;
+}
+
+.dkv-card {
+  &:hover {
+    cursor: pointer;
+    box-shadow: 0 6px 8px 0 rgba(0, 0, 0, 0.2), 0 8px 20px 0 rgba(0, 0, 0, 0.19);
+    transform: scale(1.02);
+    transition: transform 250ms;
+    transition-timing-function: ease-out;
+
+    .dkv-btn-more {
+      display: flex;
+    }
+
+    .dkv-card-image {
+      opacity: 1;
+    }
+  }
+}
+
+.dkv-btn-more {
+  position: absolute;
+  display: none;
+  bottom: 0;
+  right: 0;
+  margin: 1rem;
 }
