@@ -19,10 +19,7 @@ export class VehicleComponent implements OnInit {
 
   ngOnInit(): void {
     this.car$ = this.activateRout.queryParams.pipe(
-      map((params: Params) => {
-        console.log(params['carId'], typeof params['carId']);
-        return params['carId'];
-      }),
+      map((params: Params) => params['carId']),
       switchMap((carId: string) => this.carsService.getVehicleById(carId))
     );
   }

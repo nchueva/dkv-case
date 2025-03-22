@@ -1,12 +1,5 @@
-@use "@angular/material" as mat;
-
-// Customize the entire app. Change :root to your selector if you want to scope the styles.
-:host {
-  @include mat.dialog-overrides(
-    (
-      container-max-width: 90%,
-      container-min-width: 800px,
-      container-small-max-width: 60%,
-    )
-  );
+.form-control {
+  &.ng-invalid.ng-touched {
+    border-color: red;
+  }
 }

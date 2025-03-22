@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { MatDialogModule } from '@angular/material/dialog';
+import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { DefaultService } from '../core/api/v1';
 import {
@@ -9,7 +9,10 @@ import {
   Validators,
 } from '@angular/forms';
 import { FormBuilder } from '@angular/forms';
-import { NgIf } from '@angular/common';
+import { AsyncPipe } from '@angular/common';
+import { VehicleForm } from '../models/vehicles';
+import { catchError, Subject, take, tap } from 'rxjs';
+import { VehiclesApiService } from '../services/vehicles-api.service';
 
 interface CarCardDorm {
   name: FormControl<string>;
@@ -24,57 +27,81 @@ interface CarCardDorm {
 
 @Component({
   selector: 'app-add-card-dialog',
-  imports: [MatDialogModule, MatButtonModule, ReactiveFormsModule, NgIf],
+  imports: [MatDialogModule, MatButtonModule, ReactiveFormsModule, AsyncPipe],
   templateUrl: './add-card-dialog.component.html',
   styleUrl: './add-card-dialog.component.scss',
 })
 export class AddCardDialogComponent {
-  private readonly carsService = inject(DefaultService);
-  private readonly formBuilder = inject(FormBuilder);
+  private readonly vehiclesApiService = inject(VehiclesApiService);
 
-  // carForm = this.formBuilder.group({
-  //   name: ['', Validators.required, { nonNullable: true }],
-  //   manufacturer: ['', Validators.required, { nonNullable: true }],
-  //   model: ['', Validators.required],
-  //   type: ['', Validators.required],
-  //   fuel: ['', Validators.required],
-  //   vin: ['', Validators.required],
-  //   mileage: ['' ],
-  //   color: [''],
-  // });
+  constructor(public dialogRef: MatDialogRef<AddCardDialogComponent>) {}
 
-  carForm = new FormGroup<CarCardDorm>({
-    name: new FormControl('', {
+  private readonly showError$$ = new Subject<boolean>();
+  showError$ = this.showError$$.asObservable();
+
+  carForm = new FormGroup({
+    name: new FormControl<string>('', {
       nonNullable: true,
-      validators: [Validators.required, Validators.minLength(4)],
+      validators: [Validators.required, Validators.minLength(3)],
     }),
-    manufacturer: new FormControl('', {
-      nonNullable: true,
-      validators: [Validators.required],
-    }),
-    model: new FormControl('', {
-      nonNullable: true,
-      validators: [Validators.required],
-    }),
-    type: new FormControl('', {
+    manufacturer: new FormControl<string>('', {
       nonNullable: true,
       validators: [Validators.required],
     }),
-    fuel: new FormControl('', {
+    model: new FormControl<string>('', {
       nonNullable: true,
       validators: [Validators.required],
     }),
-    vin: new FormControl('', {
+    type: new FormControl<string>('', {
       nonNullable: true,
       validators: [Validators.required],
     }),
-    mileage: new FormControl(''),
-    color: new FormControl(''),
+    fuel: new FormControl<string>('', {
+      nonNullable: true,
+      validators: [Validators.required],
+    }),
+    vin: new FormControl<string>('', {
+      nonNullable: true,
+      validators: [Validators.required],
+    }),
+    mileage: new FormControl<string | null>(null),
+    color: new FormControl<string | null>(null),
   });
 
   onSubmit() {
-    // use this.profileForm.value
-    console.log('form value', this.carForm.value);
-    // this.carsService.addVehicle()
+    console.log('carForm', this.carForm.invalid);
+    if (this.carForm.invalid) {
+      this.carForm.markAllAsTouched();
+    } else {
+      this.showError$$.next(false);
+      this.vehiclesApiService
+        .addNewVehicle(this.carForm.value as VehicleForm)
+        .pipe(
+          take(1),
+          catchError((err) => err)
+        )
+        .subscribe({
+          next: (res) => {
+            if (res) {
+              // refresh all vehicles and close the dialog
+              this.vehiclesApiService.refreshVehicles();
+              this.closeDialog();
+            }
+          },
+          error: (err) => {
+            // show error message
+            this.showError$$.next(true);
+            console.log('There is an error in adding a new card:', err);
+          },
+        });
+    }
+  }
+
+  closeDialog() {
+    this.dialogRef.close();
+  }
+
+  closeAlert() {
+    this.showError$$.next(false);
   }
 }

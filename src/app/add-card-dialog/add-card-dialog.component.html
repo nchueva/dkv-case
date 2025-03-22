@@ -1,82 +1,84 @@
 <h2 mat-dialog-title>Create new card</h2>
+
 <form [formGroup]="carForm" (ngSubmit)="onSubmit()">
   <mat-dialog-content class="mat-typography">
+    @if(showError$ | async) {
+    <div class="alert alert-danger d-flex justify-content-between" role="alert">
+      There was an error in saving. Try again.
+      <button
+        type="button"
+        class="btn-close"
+        aria-label="Close"
+        (click)="closeAlert()"
+      ></button>
+    </div>
+    }
     <div class="mb-3">
-      <label for="name" class="form-label">Name *</label>
+      <label for="name" class="form-label">Name*</label>
       <input
+        #name
         formControlName="name"
         type="text"
         class="form-control"
         id="name"
         placeholder="Name"
-        required
       />
-      <!-- <div
-        *ngIf="name.invalid && (name.dirty || name.touched)"
-        class="alert alert-danger"
-      >
-        <div *ngIf="name.hasError('required')">Name is required.</div>
-        <div *ngIf="name.hasError('minlength')">
-          Name must be at least 4 characters long.
-        </div>
-        <div *ngIf="name.hasError('forbiddenName')">Name cannot be Bob.</div>
-      </div> -->
     </div>
     <div class="mb-3">
-      <label for="model" class="form-label">Model *</label>
+      <label for="model" class="form-label">Model*</label>
       <input
         formControlName="model"
         type="text"
         class="form-control"
         id="model"
         placeholder="Car model"
-        required
       />
     </div>
     <div class="mb-3">
-      <label for="fuel" class="form-label">Fuel *</label>
+      <label for="fuel" class="form-label">Fuel*</label>
       <input
+        formControlName="fuel"
         type="text"
         class="form-control"
         id="fuel"
         placeholder="Fuel type"
-        required
       />
     </div>
 
     <div class="mb-3">
-      <label for="manufacturer" class="form-label">Manufacturer *</label>
+      <label for="manufacturer" class="form-label">Manufacturer*</label>
       <input
+        formControlName="manufacturer"
         type="text"
         class="form-control"
         id="manufacturer"
         placeholder="Manufacturer"
-        required
       />
     </div>
     <div class="mb-3">
-      <label for="vin" class="form-label">VIN *</label>
+      <label for="vin" class="form-label">VIN*</label>
       <input
+        formControlName="vin"
         type="text"
         class="form-control"
         id="vin"
         placeholder="VIN number"
-        required
       />
     </div>
     <div class="mb-3">
-      <label for="type" class="form-label">Type *</label>
+      <label for="type" class="form-label">Type*</label>
       <input
+        formControlName="type"
         type="text"
         class="form-control"
         id="type"
         placeholder="Car type"
-        required
       />
     </div>
     <div class="mb-3">
       <label for="meleage" class="form-label">Mileage</label>
       <input
+        formControlName="mileage"
         type="text"
         class="form-control"
         id="meleage"
@@ -86,6 +88,7 @@
     <div class="mb-3">
       <label for="color" class="form-label">Color</label>
       <input
+        formControlName="color"
         type="text"
         class="form-control"
         id="color"

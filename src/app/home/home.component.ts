@@ -11,6 +11,7 @@ import { Vehicle } from '../models/vehicles';
 import { Router } from '@angular/router';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { AddCardDialogComponent } from '../add-card-dialog/add-card-dialog.component';
+import { VehiclesApiService } from '../services/vehicles-api.service';
 
 @Component({
   selector: 'app-home',
@@ -20,45 +21,26 @@ import { AddCardDialogComponent } from '../add-card-dialog/add-card-dialog.compo
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HomeComponent implements OnDestroy {
-  private readonly carsService = inject(DefaultService);
+  private readonly vehiclesApiService = inject(VehiclesApiService);
   private readonly router = inject(Router);
   private readonly dialog = inject(MatDialog);
 
-  cars$: Observable<Vehicle[]> = this.carsService.getVehicles().pipe(
-    map((cars: Vehicle[]) => {
-      return cars.sort((a, b) => {
-        if (a.name && b.name) {
-          return a.name.localeCompare(b.name);
-        } else if (a.name && !b.name) {
-          return -1; // place a before b => [a,b]
-        } else if (!a.name && b.name) {
-          return 1; // place b before a => [b,a]
-        }
-
-        return 0; // both don't exist, consider them as equal
-      });
-    }),
-    tap((cars: Vehicle[]) => {
-      console.log('cars', cars);
-      const fullView = cars.filter((car) => car.color || car.mileage);
-      console.log(fullView);
-    })
-  );
+  cars$: Observable<Vehicle[]> = this.vehiclesApiService.getVehicles();
 
   showDetails(car: Vehicle): void {
     if (car.id) {
       this.router.navigate([`vehicle`], { queryParams: { carId: car.id } });
     } else {
-      console.log('The card has no id');
+      throw new Error('The card has no id');
     }
   }
 
   addCard(): void {
     const dialogRef = this.dialog.open(AddCardDialogComponent);
 
-    dialogRef.afterClosed().subscribe((result) => {
-      console.log(`Dialog result: ${result}`);
+    dialogRef.afterClosed().subscribe(() => {
       // TODO: unsubscribe
+      // TODO: show success toast
     });
   }
 
