@@ -1,8 +1,100 @@
-<h2 mat-dialog-title>Install Angular</h2>
-<mat-dialog-content class="mat-typography">
-  <h3>Develop across all platforms</h3>
-</mat-dialog-content>
-<mat-dialog-actions align="end">
-  <button mat-button mat-dialog-close>Cancel</button>
-  <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Save</button>
-</mat-dialog-actions>
+<h2 mat-dialog-title>Create new card</h2>
+<form [formGroup]="carForm" (ngSubmit)="onSubmit()">
+  <mat-dialog-content class="mat-typography">
+    <div class="mb-3">
+      <label for="name" class="form-label">Name *</label>
+      <input
+        formControlName="name"
+        type="text"
+        class="form-control"
+        id="name"
+        placeholder="Name"
+        required
+      />
+      <!-- <div
+        *ngIf="name.invalid && (name.dirty || name.touched)"
+        class="alert alert-danger"
+      >
+        <div *ngIf="name.hasError('required')">Name is required.</div>
+        <div *ngIf="name.hasError('minlength')">
+          Name must be at least 4 characters long.
+        </div>
+        <div *ngIf="name.hasError('forbiddenName')">Name cannot be Bob.</div>
+      </div> -->
+    </div>
+    <div class="mb-3">
+      <label for="model" class="form-label">Model *</label>
+      <input
+        formControlName="model"
+        type="text"
+        class="form-control"
+        id="model"
+        placeholder="Car model"
+        required
+      />
+    </div>
+    <div class="mb-3">
+      <label for="fuel" class="form-label">Fuel *</label>
+      <input
+        type="text"
+        class="form-control"
+        id="fuel"
+        placeholder="Fuel type"
+        required
+      />
+    </div>
+
+    <div class="mb-3">
+      <label for="manufacturer" class="form-label">Manufacturer *</label>
+      <input
+        type="text"
+        class="form-control"
+        id="manufacturer"
+        placeholder="Manufacturer"
+        required
+      />
+    </div>
+    <div class="mb-3">
+      <label for="vin" class="form-label">VIN *</label>
+      <input
+        type="text"
+        class="form-control"
+        id="vin"
+        placeholder="VIN number"
+        required
+      />
+    </div>
+    <div class="mb-3">
+      <label for="type" class="form-label">Type *</label>
+      <input
+        type="text"
+        class="form-control"
+        id="type"
+        placeholder="Car type"
+        required
+      />
+    </div>
+    <div class="mb-3">
+      <label for="meleage" class="form-label">Mileage</label>
+      <input
+        type="text"
+        class="form-control"
+        id="meleage"
+        placeholder="Mileage"
+      />
+    </div>
+    <div class="mb-3">
+      <label for="color" class="form-label">Color</label>
+      <input
+        type="text"
+        class="form-control"
+        id="color"
+        placeholder="Car's color"
+      />
+    </div>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Cancel</button>
+    <button mat-button cdkFocusInitial type="submit">Save</button>
+  </mat-dialog-actions>
+</form>

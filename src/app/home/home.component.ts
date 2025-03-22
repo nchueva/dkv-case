@@ -1,4 +1,9 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  inject,
+  OnDestroy,
+} from '@angular/core';
 import { map, Observable, tap } from 'rxjs';
 import { DefaultService } from '../core/api/v1';
 import { AsyncPipe } from '@angular/common';
@@ -14,9 +19,10 @@ import { AddCardDialogComponent } from '../add-card-dialog/add-card-dialog.compo
   styleUrl: './home.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class HomeComponent {
+export class HomeComponent implements OnDestroy {
   private readonly carsService = inject(DefaultService);
   private readonly router = inject(Router);
+  private readonly dialog = inject(MatDialog);
 
   cars$: Observable<Vehicle[]> = this.carsService.getVehicles().pipe(
     map((cars: Vehicle[]) => {
@@ -47,8 +53,6 @@ export class HomeComponent {
     }
   }
 
-  readonly dialog = inject(MatDialog);
-
   addCard(): void {
     const dialogRef = this.dialog.open(AddCardDialogComponent);
 
@@ -57,4 +61,6 @@ export class HomeComponent {
       // TODO: unsubscribe
     });
   }
+
+  ngOnDestroy(): void {}
 }
