@@ -26,3 +26,4 @@ export const routes: Routes = [
   { path: '404-not-found', component: PageNotFoundComponent },
   { path: '**', component: PageNotFoundComponent },
 ];
+// TODO: clean up

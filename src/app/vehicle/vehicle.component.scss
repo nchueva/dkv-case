@@ -1,13 +1,35 @@
+@use "../variables" as vars;
+
+:host {
+  width: 100%;
+  height: 100%;
+}
+
+$dkv-vehicle-container-width: 600px;
+$dkv-vehicle-container-width-sm: 400px;
+$dkv-vehicle-space: vars.$dkv-vertical-space;
+
+.dkv-page-title {
+  display: flex;
+  justify-content: center;
+  margin-block: $dkv-vehicle-space;
+}
+
 .dkv-vehicle-grid {
   display: grid;
-  grid-template-columns: minmax(200px, 600px) auto;
-  grid-template-rows: auto;
   width: 100%;
-  grid-gap: 2rem;
-  padding: 4rem;
-  //TODO: adapt for mobile and big screens
+  grid-template-columns: repeat(
+    auto-fit,
+    minmax(200px, $dkv-vehicle-container-width)
+  );
+  grid-template-rows: max-content;
+  grid-gap: $dkv-vehicle-space;
+  padding-inline: vars.$dkv-horizontal-space;
+  margin-block: $dkv-vehicle-space;
+  justify-content: center;
 
-  > * {
+  > .dkv-car-image,
+  > .dkv-car-description {
     border: 1px solid #808080;
     border-radius: 6px;
     overflow: hidden;
@@ -15,10 +37,16 @@
 }
 
 .dkv-car-image {
+  max-height: $dkv-vehicle-container-width;
+  display: flex;
+
   img {
-    width: 100%;
+    width: auto;
     height: auto;
+    max-width: $dkv-vehicle-container-width;
+    max-height: $dkv-vehicle-container-width;
     object-fit: cover;
+    border-radius: inherit;
   }
 }
 
@@ -26,6 +54,21 @@
   width: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: stretch;
   flex-shrink: 0;
+}
+
+@media screen and (max-width: 700px) {
+  .dkv-vehicle-grid {
+    padding-inline: vars.$dkv-horizontal-space-sm;
+  }
+}
+
+@media screen and (max-width: 1350px) {
+  .dkv-car-image {
+    img {
+      max-width: 100%;
+      width: 100%;
+      max-height: $dkv-vehicle-container-width-sm;
+    }
+  }
 }

@@ -1,3 +1,5 @@
+@use "../variables" as vars;
+
 .dkv-home-content {
   display: flex;
   width: 100%;
@@ -5,22 +7,25 @@
   flex-direction: column;
 }
 
-.dkv-cards {
+.dkv-cards-grid,
+.dkv-add-card-btn {
+  margin-block: vars.$dkv-vertical-space;
+  padding-inline: vars.$dkv-horizontal-space;
+}
+
+.dkv-cards-grid {
+  @include cards-template-cols(30rem);
+
   display: grid;
   width: 100%;
-  grid-template-columns: repeat(auto-fill, minmax(15rem, 30rem));
   grid-template-rows: max-content;
-  grid-gap: 2rem;
+  grid-gap: vars.$dkv-vertical-space;
   overflow: auto;
-  padding-block: 2rem;
   justify-content: center;
 }
 
-.dkv-content-spacer {
-  padding-inline: 4rem; //???
-}
-
-.dkv-add-card {
+.dkv-add-card-btn {
+  width: 100%;
   grid-column: 1 / -1;
 }
 
@@ -30,6 +35,7 @@
   object-fit: cover;
   opacity: 0.85;
 }
+
 h5 {
   color: #f18400;
 }
@@ -58,4 +64,27 @@ h5 {
   bottom: 0;
   right: 0;
   margin: 1rem;
+}
+
+@media screen and (max-width: 700px) {
+  .dkv-cards-grid,
+  .dkv-add-card-btn {
+    padding-inline: vars.$dkv-horizontal-space-sm;
+  }
+}
+
+@media screen and (max-width: 1120px) {
+  .dkv-cards-grid {
+    @include cards-template-cols(25rem);
+  }
+}
+
+@media screen and (max-width: 960px) {
+  .dkv-cards-grid {
+    @include cards-template-cols(1fr);
+  }
+}
+
+@mixin cards-template-cols($max-size) {
+  grid-template-columns: repeat(auto-fill, minmax(18rem, $max-size));
 }

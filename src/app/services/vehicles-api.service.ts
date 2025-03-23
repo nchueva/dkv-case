@@ -1,7 +1,14 @@
 import { inject, Injectable } from '@angular/core';
 import { Vehicle, VehicleForm } from '../models/vehicles';
 import { DefaultService } from '../core/api/v1';
-import { BehaviorSubject, map, Observable, switchMap, take, tap } from 'rxjs';
+import {
+  BehaviorSubject,
+  catchError,
+  map,
+  Observable,
+  switchMap,
+  take,
+} from 'rxjs';
 
 function sortCarsAsc(cars: Vehicle[]) {
   return cars.sort((a, b) => {
@@ -28,6 +35,10 @@ export class VehiclesApiService {
       switchMap(() => this.carsService.getVehicles()),
       map((cars: Vehicle[]) => {
         return sortCarsAsc(cars);
+      }),
+      catchError((err) => {
+        console.error('There is an error in getVehicles:', err);
+        return [];
       })
     );
   }

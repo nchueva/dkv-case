@@ -3,9 +3,10 @@ import {
   Component,
   inject,
   OnDestroy,
+  signal,
 } from '@angular/core';
-import { map, Observable, tap } from 'rxjs';
-import { DefaultService } from '../core/api/v1';
+import { map, Observable, share, tap } from 'rxjs';
+
 import { AsyncPipe } from '@angular/common';
 import { Vehicle } from '../models/vehicles';
 import { Router } from '@angular/router';
@@ -14,7 +15,7 @@ import { AddCardDialogComponent } from '../add-card-dialog/add-card-dialog.compo
 import { VehiclesApiService } from '../services/vehicles-api.service';
 
 @Component({
-  selector: 'app-home',
+  selector: 'home',
   imports: [AsyncPipe, MatDialogModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
@@ -24,8 +25,15 @@ export class HomeComponent implements OnDestroy {
   private readonly vehiclesApiService = inject(VehiclesApiService);
   private readonly router = inject(Router);
   private readonly dialog = inject(MatDialog);
+  loadingSignal = signal(true);
+  // TODO: add text truncation
 
-  cars$: Observable<Vehicle[]> = this.vehiclesApiService.getVehicles();
+  cars$: Observable<Vehicle[]> = this.vehiclesApiService.getVehicles().pipe(
+    tap(() => {
+      this.loadingSignal.set(false);
+    })
+    // map(() => [])
+  );
 
   showDetails(car: Vehicle): void {
     if (car.id) {
@@ -37,9 +45,7 @@ export class HomeComponent implements OnDestroy {
 
   addCard(): void {
     const dialogRef = this.dialog.open(AddCardDialogComponent);
-
     dialogRef.afterClosed().subscribe(() => {
-      // TODO: unsubscribe
       // TODO: show success toast
     });
   }

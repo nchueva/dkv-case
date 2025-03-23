@@ -7,19 +7,27 @@ body {
   height: 100%;
   font-size: 16px;
 }
+
 body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
   box-sizing: border-box;
+  min-width: 360px;
 }
 
 // Customize the entire app. Change :root to your selector if you want to scope the styles.
 :root {
   @include mat.dialog-overrides(
     (
-      // container-max-width: 800px,
       container-min-width: 600px,
-      // container-small-max-width: 80%,
     )
   );
+}
+
+.dkv-center-page-positioning {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

@@ -1,10 +1,11 @@
 <div class="dkv-home-content">
-  <div class="dkv-add-card w-100 d-flex my-4 dkv-content-spacer">
+  <div class="dkv-add-card-btn">
     <button class="btn btn-primary me-3" (click)="addCard()">
       Add new card
     </button>
   </div>
-  <div class="dkv-cards dkv-content-spacer">
+  @if((cars$ | async)?.length) {
+  <div class="dkv-cards-grid">
     @for(car of cars$ | async; track car.id ){
     <div class="card dkv-card" (click)="showDetails(car)">
       <img
@@ -24,4 +25,9 @@
     </div>
     }
   </div>
+  } @else { @if(loadingSignal()) {
+  <div class="dkv-center-page-positioning">Loading</div>
+  } @else {
+  <div class="dkv-center-page-positioning"><h4>No items</h4></div>
+  } }
 </div>
