@@ -1,3 +1,5 @@
+@use "./variables.scss" as vars;
+
 :host {
   height: 100%;
   width: 100%;
@@ -5,13 +7,11 @@
   flex-direction: column;
 }
 
-$color-bg: #002b56;
-
 header,
 footer {
   height: 4rem;
-  background-color: $color-bg;
-  color: invert($color: $color-bg);
+  background-color: vars.$dkv-bg;
+  color: vars.$dkv-primary-color;
   display: flex;
   flex-shrink: 0;
 }

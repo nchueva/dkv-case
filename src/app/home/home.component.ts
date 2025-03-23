@@ -21,18 +21,17 @@ import { VehiclesApiService } from '../services/vehicles-api.service';
   styleUrl: './home.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class HomeComponent implements OnDestroy {
+export class HomeComponent {
   private readonly vehiclesApiService = inject(VehiclesApiService);
   private readonly router = inject(Router);
   private readonly dialog = inject(MatDialog);
+
   loadingSignal = signal(true);
-  // TODO: add text truncation
 
   cars$: Observable<Vehicle[]> = this.vehiclesApiService.getVehicles().pipe(
     tap(() => {
       this.loadingSignal.set(false);
     })
-    // map(() => [])
   );
 
   showDetails(car: Vehicle): void {
@@ -45,10 +44,6 @@ export class HomeComponent implements OnDestroy {
 
   addCard(): void {
     const dialogRef = this.dialog.open(AddCardDialogComponent);
-    dialogRef.afterClosed().subscribe(() => {
-      // TODO: show success toast
-    });
+    dialogRef.afterClosed().subscribe();
   }
-
-  ngOnDestroy(): void {}
 }

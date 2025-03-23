@@ -1,5 +1,9 @@
 @use "../variables" as vars;
 
+@mixin cards-template-cols($max-size) {
+  grid-template-columns: repeat(auto-fill, minmax(18rem, $max-size));
+}
+
 .dkv-home-content {
   display: flex;
   width: 100%;
@@ -27,6 +31,8 @@
 .dkv-add-card-btn {
   width: 100%;
   grid-column: 1 / -1;
+  display: flex;
+  justify-content: flex-end;
 }
 
 .dkv-card-image {
@@ -37,7 +43,7 @@
 }
 
 h5 {
-  color: #f18400;
+  color: vars.$dkv-primary-color;
 }
 
 .dkv-card {
@@ -83,8 +89,4 @@ h5 {
   .dkv-cards-grid {
     @include cards-template-cols(1fr);
   }
-}
-
-@mixin cards-template-cols($max-size) {
-  grid-template-columns: repeat(auto-fill, minmax(18rem, $max-size));
 }

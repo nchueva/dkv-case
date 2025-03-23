@@ -15,19 +15,30 @@ body {
   min-width: 360px;
 }
 
-// Customize the entire app. Change :root to your selector if you want to scope the styles.
-:root {
-  @include mat.dialog-overrides(
-    (
-      container-min-width: 600px,
-    )
-  );
-}
-
 .dkv-center-page-positioning {
   height: 100%;
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+// -- Angular Material --
+
+:root {
+  @include mat.dialog-overrides(
+    (
+      container-min-width: 37.5rem,
+    )
+  );
+}
+
+@media screen and (max-width: 700px) {
+  :root {
+    @include mat.dialog-overrides(
+      (
+        container-min-width: 17.5rem,
+      )
+    );
+  }
 }
