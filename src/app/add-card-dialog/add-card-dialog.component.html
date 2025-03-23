@@ -4,7 +4,7 @@
   <mat-dialog-content class="mat-typography">
     @if(showError$ | async) {
     <div class="alert alert-danger d-flex justify-content-between" role="alert">
-      There was an error in saving. Try again.
+      An error occurred while saving the card.
       <button
         type="button"
         class="btn-close"
@@ -79,7 +79,7 @@
       <label for="meleage" class="form-label">Mileage</label>
       <input
         formControlName="mileage"
-        type="text"
+        type="number"
         class="form-control"
         id="meleage"
         placeholder="Mileage"

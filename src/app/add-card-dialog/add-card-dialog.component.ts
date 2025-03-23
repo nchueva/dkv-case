@@ -1,29 +1,16 @@
 import { Component, inject } from '@angular/core';
 import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
-import { DefaultService } from '../core/api/v1';
 import {
   FormControl,
   FormGroup,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { FormBuilder } from '@angular/forms';
 import { AsyncPipe } from '@angular/common';
-import { VehicleForm } from '../models/vehicles';
-import { catchError, Subject, take, tap } from 'rxjs';
+import { catchError, Subject, take } from 'rxjs';
 import { VehiclesApiService } from '../services/vehicles-api.service';
-
-interface CarCardDorm {
-  name: FormControl<string>;
-  manufacturer: FormControl<string>;
-  model: FormControl<string>;
-  type: FormControl<string>;
-  fuel: FormControl<string>;
-  vin: FormControl<string>;
-  mileage: FormControl<string | null>;
-  color: FormControl<string | null>;
-}
+import { isVehicleForm } from './guard-functions';
 
 @Component({
   selector: 'app-add-card-dialog',
@@ -64,36 +51,44 @@ export class AddCardDialogComponent {
       nonNullable: true,
       validators: [Validators.required],
     }),
-    mileage: new FormControl<string | null>(null),
+    mileage: new FormControl<number | null>(null),
     color: new FormControl<string | null>(null),
   });
 
   onSubmit() {
-    console.log('carForm', this.carForm.invalid);
+    console.log('carForm invalid', this.carForm.invalid);
     if (this.carForm.invalid) {
       this.carForm.markAllAsTouched();
     } else {
+      // TODO: trim strings and convert 0 to null for mileage
       this.showError$$.next(false);
-      this.vehiclesApiService
-        .addNewVehicle(this.carForm.value as VehicleForm)
-        .pipe(
-          take(1),
-          catchError((err) => err)
-        )
-        .subscribe({
-          next: (res) => {
-            if (res) {
-              // refresh all vehicles and close the dialog
-              this.vehiclesApiService.refreshVehicles();
-              this.closeDialog();
-            }
-          },
-          error: (err) => {
-            // show error message
-            this.showError$$.next(true);
-            console.log('There is an error in adding a new card:', err);
-          },
-        });
+      console.log(
+        'isVehicleForm(this.carForm.value)',
+        isVehicleForm(this.carForm.value)
+      );
+      console.log('this.carForm.value', this.carForm.value);
+      if (isVehicleForm(this.carForm.value)) {
+        console.log('is true');
+        // this.vehiclesApiService
+        //   .addNewVehicle(this.carForm.value)
+        //   .pipe(
+        //     take(1),
+        //     catchError((err) => err)
+        //   )
+        //   .subscribe({
+        //     next: () => {
+        //       // refresh all vehicles and close the dialog
+        //       this.vehiclesApiService.refreshVehicles();
+        //       this.closeDialog();
+        //     },
+        //     error: (err) => {
+        //       this.showError$$.next(true); // show error alert
+        //       throw new Error('There is an error in adding a new card:', err);
+        //     },
+        //   });
+      } else {
+        console.error("Form can not be saved because of wrong input's types");
+      }
     }
   }
 
