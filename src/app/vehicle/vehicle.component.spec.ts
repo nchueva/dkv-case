@@ -3,9 +3,10 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { VehicleComponent } from './vehicle.component';
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
-import { DefaultService } from '../core/api/v1';
+import { VehiclesApiService } from '../services/vehicles-api.service';
+import { Vehicle } from '../models/vehicles';
 
-const obj = {
+const obj: Vehicle = {
   name: 'Name 1',
   manufacturer: 'BMW',
   model: 'XXX',
@@ -19,8 +20,8 @@ const obj = {
 describe('VehicleComponent', () => {
   let component: VehicleComponent;
   let fixture: ComponentFixture<VehicleComponent>;
-  const mockDefaultService = {
-    getVehicles: () => of(obj),
+  const mockVehiclesApiService = {
+    getVehicleById: () => of('obj'),
   };
 
   beforeEach(async () => {
@@ -30,17 +31,18 @@ describe('VehicleComponent', () => {
         {
           provide: ActivatedRoute,
           useValue: {
-            queryParams: of({ carId: 123 }),
+            queryParams: of({ carId: 40 }),
           },
         },
         {
-          provide: DefaultService,
-          useValue: mockDefaultService,
+          provide: VehiclesApiService,
+          useValue: mockVehiclesApiService,
         },
       ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(VehicleComponent);
+    // defaultService = TestBed.inject(DefaultService);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

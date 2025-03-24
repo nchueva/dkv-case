@@ -43,6 +43,10 @@ export class VehiclesApiService {
     );
   }
 
+  getVehicleById(cardId: string): Observable<Vehicle> {
+    return this.vehicleService.getVehicleById(cardId).pipe(take(1));
+  }
+
   addNewVehicle(newVehicle: VehicleForm): Observable<Vehicle> {
     return this.vehicleService.addVehicle(newVehicle).pipe(take(1));
   }
