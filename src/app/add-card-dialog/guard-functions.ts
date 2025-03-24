@@ -66,10 +66,7 @@ export function cleanFormValues(formValues: VehicleForm): VehicleForm {
       if (typeof value === 'string') {
         return [key, value.trim()];
       }
-      if (
-        (typeof value === 'number' && value === 0) ||
-        (key === 'mileage' && typeof value !== 'number')
-      ) {
+      if (typeof value === 'number' && value === 0) {
         return [key, null];
       }
       return [key, value];

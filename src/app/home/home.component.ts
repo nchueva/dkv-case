@@ -2,10 +2,9 @@ import {
   ChangeDetectionStrategy,
   Component,
   inject,
-  OnDestroy,
   signal,
 } from '@angular/core';
-import { map, Observable, share, tap } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 
 import { AsyncPipe } from '@angular/common';
 import { Vehicle } from '../models/vehicles';

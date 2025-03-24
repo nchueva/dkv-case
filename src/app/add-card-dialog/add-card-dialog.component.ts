@@ -10,7 +10,7 @@ import {
 import { AsyncPipe } from '@angular/common';
 import { catchError, Subject, take } from 'rxjs';
 import { VehiclesApiService } from '../services/vehicles-api.service';
-import { isVehicleForm } from './guard-functions';
+import { cleanFormValues, isVehicleForm } from './guard-functions';
 
 @Component({
   selector: 'app-add-card-dialog',
@@ -56,14 +56,14 @@ export class AddCardDialogComponent {
   });
 
   onSubmit() {
-    console.log('carForm invalid', this.vehicleForm.invalid);
     if (this.vehicleForm.invalid) {
       this.vehicleForm.markAllAsTouched();
     } else {
       this.showError$$.next(false);
       if (isVehicleForm(this.vehicleForm.value)) {
+        const cleanValues = cleanFormValues(this.vehicleForm.value);
         this.vehiclesApiService
-          .addNewVehicle(this.vehicleForm.value)
+          .addNewVehicle(cleanValues)
           .pipe(
             take(1),
             catchError((err) => err)
