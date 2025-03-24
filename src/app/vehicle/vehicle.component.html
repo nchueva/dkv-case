@@ -5,21 +5,26 @@
     <img src="/three_cars.png" alt="vehicle image" />
   </div>
   <div class="dkv-vehicle-description">
-    <h4>Characteristics:</h4>
-    <div>Manufacturer: {{ vehicle.manufacturer }}</div>
-    <div>Model: {{ vehicle.model }}</div>
-    <div>Type: {{ vehicle.type }}</div>
-    <div>Vin: {{ vehicle.vin }}</div>
-    <div>Fuel: {{ vehicle.fuel }}</div>
+    <h4 class="mb-4">Characteristics:</h4>
+    <p>
+      <span class="dkv-vehicle-text-bold">Manufacturer:</span>
+      {{ vehicle.manufacturer }}
+    </p>
+    <p><span class="dkv-vehicle-text-bold">Model:</span> {{ vehicle.model }}</p>
+    <p><span class="dkv-vehicle-text-bold">Type:</span> {{ vehicle.type }}</p>
+    <p><span class="dkv-vehicle-text-bold">Vin:</span> {{ vehicle.vin }}</p>
+    <p><span class="dkv-vehicle-text-bold">Fuel:</span> {{ vehicle.fuel }}</p>
     @if(vehicle.color) {
-    <div>Color: {{ vehicle.color }}</div>
+    <p><span class="dkv-vehicle-text-bold">Color:</span> {{ vehicle.color }}</p>
     } @if(vehicle.mileage) {
-    <div>Mileage: {{ vehicle.mileage }}</div>
+    <p>
+      <span class="dkv-vehicle-text-bold">Mileage:</span> {{ vehicle.mileage }}
+    </p>
     }
   </div>
 </div>
 } @else if(loading()){
-<div class="dkv-center-page-positioning">loading</div>
+<div class="dkv-center-page-positioning">Loading...</div>
 } @else{
 <div class="dkv-center-page-positioning">There is no such an item</div>
 }

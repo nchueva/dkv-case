@@ -1,4 +1,5 @@
 @use "../variables" as vars;
+@use "sass:color";
 
 :host {
   width: 100%;
@@ -30,7 +31,7 @@ $dkv-vehicle-space: vars.$dkv-vertical-space;
 
   > .dkv-vehicle-image,
   > .dkv-vehicle-description {
-    border: 1px solid #808080;
+    border: 1px solid vars.$dkv-border-color;
     border-radius: 6px;
     overflow: hidden;
   }
@@ -55,6 +56,15 @@ $dkv-vehicle-space: vars.$dkv-vertical-space;
   display: flex;
   flex-direction: column;
   flex-shrink: 0;
+  padding: 1rem;
+
+  > h4 {
+    color: color.adjust(vars.$dkv-text-color, $lightness: 25);
+  }
+}
+
+.dkv-vehicle-text-bold {
+  font-weight: bold;
 }
 
 @media screen and (max-width: 700px) {

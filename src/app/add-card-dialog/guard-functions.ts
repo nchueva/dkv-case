@@ -58,3 +58,21 @@ export function isVehicleForm(value: unknown): value is VehicleForm {
     hasOptionalMileage
   );
 }
+
+// optionally we can clean values of the form right before saving
+export function cleanFormValues(formValues: VehicleForm): VehicleForm {
+  return Object.fromEntries(
+    Object.entries(formValues).map(([key, value]) => {
+      if (typeof value === 'string') {
+        return [key, value.trim()];
+      }
+      if (
+        (typeof value === 'number' && value === 0) ||
+        (key === 'mileage' && typeof value !== 'number')
+      ) {
+        return [key, null];
+      }
+      return [key, value];
+    })
+  ) as VehicleForm;
+}

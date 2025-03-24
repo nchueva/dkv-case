@@ -16,7 +16,7 @@
         alt="Vehicle card image"
       />
       <div class="card-body">
-        <h5 class="card-title">{{ vehicle.name }}</h5>
+        <h5 class="card-title dkv-card-title">{{ vehicle.name }}</h5>
         <p class="card-text">Model: {{ vehicle.model }}</p>
         <p class="card-text">Manufacturer: {{ vehicle.manufacturer }}</p>
         @if(vehicle.mileage) {
@@ -29,7 +29,7 @@
   </div>
 
   } @else { @if(loadingSignal()) {
-  <div class="dkv-center-page-positioning">Loading</div>
+  <div class="dkv-center-page-positioning">Loading...</div>
   } @else {
   <div class="dkv-center-page-positioning"><h4>No items</h4></div>
   } }
