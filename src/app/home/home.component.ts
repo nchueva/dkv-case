@@ -28,15 +28,15 @@ export class HomeComponent {
 
   loadingSignal = signal(true);
 
-  cars$: Observable<Vehicle[]> = this.vehiclesApiService.getVehicles().pipe(
+  vehicles$: Observable<Vehicle[]> = this.vehiclesApiService.getVehicles().pipe(
     tap(() => {
       this.loadingSignal.set(false);
     })
   );
 
-  showDetails(car: Vehicle): void {
-    if (car.id) {
-      this.router.navigate([`vehicle`], { queryParams: { carId: car.id } });
+  showDetails(vehicle: Vehicle): void {
+    if (vehicle.id) {
+      this.router.navigate([`vehicle`], { queryParams: { carId: vehicle.id } });
     } else {
       throw new Error('The card has no id');
     }

@@ -1,6 +1,6 @@
 <h2 mat-dialog-title>Create new card</h2>
 
-<form [formGroup]="carForm" (ngSubmit)="onSubmit()">
+<form [formGroup]="vehicleForm" (ngSubmit)="onSubmit()">
   <mat-dialog-content class="mat-typography">
     @if(showError$ | async) {
     <div class="alert alert-danger d-flex justify-content-between" role="alert">
@@ -92,7 +92,7 @@
         type="text"
         class="form-control"
         id="color"
-        placeholder="Car's color"
+        placeholder="Car color"
       />
     </div>
   </mat-dialog-content>

@@ -26,7 +26,7 @@ export class AddCardDialogComponent {
   private readonly showError$$ = new Subject<boolean>();
   showError$ = this.showError$$.asObservable();
 
-  carForm = new FormGroup({
+  vehicleForm = new FormGroup({
     name: new FormControl<string>('', {
       nonNullable: true,
       validators: [Validators.required, Validators.minLength(3)],
@@ -56,36 +56,29 @@ export class AddCardDialogComponent {
   });
 
   onSubmit() {
-    console.log('carForm invalid', this.carForm.invalid);
-    if (this.carForm.invalid) {
-      this.carForm.markAllAsTouched();
+    console.log('carForm invalid', this.vehicleForm.invalid);
+    if (this.vehicleForm.invalid) {
+      this.vehicleForm.markAllAsTouched();
     } else {
-      // TODO: trim strings and convert 0 to null for mileage
       this.showError$$.next(false);
-      console.log(
-        'isVehicleForm(this.carForm.value)',
-        isVehicleForm(this.carForm.value)
-      );
-      console.log('this.carForm.value', this.carForm.value);
-      if (isVehicleForm(this.carForm.value)) {
-        console.log('is true');
-        // this.vehiclesApiService
-        //   .addNewVehicle(this.carForm.value)
-        //   .pipe(
-        //     take(1),
-        //     catchError((err) => err)
-        //   )
-        //   .subscribe({
-        //     next: () => {
-        //       // refresh all vehicles and close the dialog
-        //       this.vehiclesApiService.refreshVehicles();
-        //       this.closeDialog();
-        //     },
-        //     error: (err) => {
-        //       this.showError$$.next(true); // show error alert
-        //       throw new Error('There is an error in adding a new card:', err);
-        //     },
-        //   });
+      if (isVehicleForm(this.vehicleForm.value)) {
+        this.vehiclesApiService
+          .addNewVehicle(this.vehicleForm.value)
+          .pipe(
+            take(1),
+            catchError((err) => err)
+          )
+          .subscribe({
+            next: () => {
+              // refresh all vehicles and close the dialog
+              this.vehiclesApiService.refreshVehicles();
+              this.closeDialog();
+            },
+            error: (err) => {
+              this.showError$$.next(true); // show error alert
+              throw new Error('There is an error in adding a new card:', err);
+            },
+          });
       } else {
         console.error("Form can not be saved because of wrong input's types");
       }

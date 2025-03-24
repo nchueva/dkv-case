@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { catchError, map, Observable, of, switchMap, tap } from 'rxjs';
 import { Vehicle } from '../models/vehicles';
@@ -11,22 +11,23 @@ import { DefaultService } from '../core/api/v1';
   templateUrl: './vehicle.component.html',
   styleUrl: './vehicle.component.scss',
 })
-export class VehicleComponent implements OnInit {
+export class VehicleComponent {
   private readonly activateRout = inject(ActivatedRoute);
   private readonly carsService = inject(DefaultService);
 
-  car$: Observable<Vehicle | undefined> | undefined;
-  loading = false;
+  vehicle$: Observable<Vehicle | undefined>;
+  loading = signal(false);
 
-  ngOnInit(): void {
-    this.car$ = this.activateRout.queryParams.pipe(
+  constructor() {
+    this.vehicle$ = this.activateRout.queryParams.pipe(
       tap(() => {
-        this.loading = true;
+        this.loading.set(true);
       }),
       map((params: Params) => params['carId']),
       switchMap((carId: string) => this.carsService.getVehicleById(carId)),
-      tap(() => (this.loading = false)),
+      tap(() => this.loading.set(false)),
       catchError((err) => {
+        console.error('An error occurred:', err);
         return of(undefined);
       })
     );

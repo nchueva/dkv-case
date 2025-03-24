@@ -1,24 +1,24 @@
-@if( car$ | async; as car) {
-<h2 class="dkv-page-title">{{ car.name }}</h2>
+@if( vehicle$ | async; as vehicle) {
+<h2 class="dkv-page-title">{{ vehicle.name }}</h2>
 <div class="dkv-vehicle-grid">
-  <div class="dkv-car-image">
+  <div class="dkv-vehicle-image">
     <img src="/three_cars.png" alt="vehicle image" />
   </div>
-  <div class="dkv-car-description">
+  <div class="dkv-vehicle-description">
     <h4>Characteristics:</h4>
-    <div>Manufacturer: {{ car.manufacturer }}</div>
-    <div>Model: {{ car.model }}</div>
-    <div>Type: {{ car.type }}</div>
-    <div>Vin: {{ car.vin }}</div>
-    <div>Fuel: {{ car.fuel }}</div>
-    @if(car.color) {
-    <div>Color: {{ car.color }}</div>
-    } @if(car.mileage) {
-    <div>Mileage: {{ car.mileage }}</div>
+    <div>Manufacturer: {{ vehicle.manufacturer }}</div>
+    <div>Model: {{ vehicle.model }}</div>
+    <div>Type: {{ vehicle.type }}</div>
+    <div>Vin: {{ vehicle.vin }}</div>
+    <div>Fuel: {{ vehicle.fuel }}</div>
+    @if(vehicle.color) {
+    <div>Color: {{ vehicle.color }}</div>
+    } @if(vehicle.mileage) {
+    <div>Mileage: {{ vehicle.mileage }}</div>
     }
   </div>
 </div>
-} @else if(loading){
+} @else if(loading()){
 <div class="dkv-center-page-positioning">loading</div>
 } @else{
 <div class="dkv-center-page-positioning">There is no such an item</div>

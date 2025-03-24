@@ -5,22 +5,22 @@
     </button>
   </div>
 
-  @if((cars$ | async)?.length) {
+  @if((vehicles$ | async)?.length) {
 
   <div class="dkv-cards-grid">
-    @for(car of cars$ | async; track car.id ){
-    <div class="card dkv-card" (click)="showDetails(car)">
+    @for(vehicle of vehicles$ | async; track vehicle.id ){
+    <div class="card dkv-card" (click)="showDetails(vehicle)">
       <img
         src="/three_cars.png"
         class="card-img-top dkv-card-image"
-        alt="vehicle-card"
+        alt="Vehicle card image"
       />
       <div class="card-body">
-        <h5 class="card-title">{{ car.name }}</h5>
-        <p class="card-text">Model: {{ car.model }}</p>
-        <p class="card-text">Manufacturer: {{ car.manufacturer }}</p>
-        @if(car.mileage) {
-        <p class="card-text">Mileage: {{ car.mileage }}</p>
+        <h5 class="card-title">{{ vehicle.name }}</h5>
+        <p class="card-text">Model: {{ vehicle.model }}</p>
+        <p class="card-text">Manufacturer: {{ vehicle.manufacturer }}</p>
+        @if(vehicle.mileage) {
+        <p class="card-text">Mileage: {{ vehicle.mileage }}</p>
         }
         <a class="btn btn-light dkv-btn-more">more</a>
       </div>
