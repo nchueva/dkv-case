@@ -42,7 +42,6 @@ describe('VehicleComponent', () => {
     }).compileComponents();
 
     fixture = TestBed.createComponent(VehicleComponent);
-    // defaultService = TestBed.inject(DefaultService);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
