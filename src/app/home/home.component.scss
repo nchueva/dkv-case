@@ -15,8 +15,9 @@
 .dkv-add-card-btn {
   margin-block-start: vars.$dkv-vertical-space;
   padding-inline: vars.$dkv-horizontal-space;
+
   &:last-child {
-    margin-block-end: vars.$dkv-vertical-space;
+    padding-block-end: vars.$dkv-vertical-space;
   }
 }
 
@@ -24,7 +25,6 @@
   @include cards-template-cols(30rem);
   display: grid;
   width: 100%;
-  height: 100%;
   grid-template-rows: max-content;
   grid-gap: vars.$dkv-vertical-space;
   justify-content: center;
