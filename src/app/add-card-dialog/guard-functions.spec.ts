@@ -31,7 +31,7 @@ class VehicleFormTest {
 describe('AddCardDialogComponent', () => {
   const obj = new VehicleFormTest('car', 'YUT847TY');
 
-  it('obj should be a record', () => {
+  it('should be record', () => {
     expect(isRecord(obj)).toBeTruthy();
   });
 
@@ -41,11 +41,11 @@ describe('AddCardDialogComponent', () => {
     }
   });
 
-  it('mileage should not have number value', () => {
+  it('should not have number value', () => {
     expect(hasNumberKeyValue('mileage', obj)).toBeFalse;
   });
 
-  it('obj should be VehicleForm', () => {
+  it('should be VehicleForm', () => {
     expect(isVehicleForm(obj)).toBeTruthy();
     const obj2 = new VehicleFormTest('car', 'YYYYYY', null, null);
     expect(isVehicleForm(obj2)).toBeTruthy;
@@ -53,7 +53,7 @@ describe('AddCardDialogComponent', () => {
     expect(isVehicleForm(obj3)).toBeTruthy;
   });
 
-  it('obj should not be VehicleForm', () => {
+  it('should not be VehicleForm', () => {
     const obj2 = new VehicleFormTest('car', 'YUT847TY', 'red', '4');
     expect(isVehicleForm(obj2)).toBeFalsy;
     const obj3 = new VehicleFormTest('car', 'YUT847TY', 7, undefined);
@@ -62,5 +62,7 @@ describe('AddCardDialogComponent', () => {
     expect(isVehicleForm(obj4)).toBeFalsy;
     const obj5 = new VehicleFormTest('car', '');
     expect(isVehicleForm(obj5)).toBeFalsy;
+    const obj6 = new VehicleFormTest('car', '1234', null, 'str');
+    expect(isVehicleForm(obj6)).toBeFalsy;
   });
 });

@@ -10,7 +10,12 @@ import {
 import { AsyncPipe } from '@angular/common';
 import { catchError, Subject, take } from 'rxjs';
 import { VehiclesApiService } from '../services/vehicles-api.service';
-import { cleanFormValues, isVehicleForm } from './guard-functions';
+import {
+  cleanFormValues,
+  stringControlValidator,
+  isVehicleForm,
+  numberControlValidator,
+} from './guard-functions';
 
 @Component({
   selector: 'app-add-card-dialog',
@@ -30,30 +35,37 @@ export class AddCardDialogComponent {
   vehicleForm = new FormGroup({
     name: new FormControl<string>('', {
       nonNullable: true,
-      validators: [Validators.required, Validators.minLength(3)],
+      validators: [
+        Validators.required,
+        Validators.minLength(3),
+        stringControlValidator(),
+      ],
     }),
     manufacturer: new FormControl<string>('', {
       nonNullable: true,
-      validators: [Validators.required],
+      validators: [Validators.required, stringControlValidator()],
     }),
     model: new FormControl<string>('', {
       nonNullable: true,
-      validators: [Validators.required],
+      validators: [Validators.required, stringControlValidator()],
     }),
     type: new FormControl<string>('', {
       nonNullable: true,
-      validators: [Validators.required],
+      validators: [Validators.required, stringControlValidator()],
     }),
     fuel: new FormControl<string>('', {
       nonNullable: true,
-      validators: [Validators.required],
+      validators: [Validators.required, stringControlValidator()],
     }),
     vin: new FormControl<string>('', {
       nonNullable: true,
-      validators: [Validators.required],
+      validators: [Validators.required, stringControlValidator()],
     }),
-    mileage: new FormControl<number | null>(null),
-    color: new FormControl<string | null>(null),
+    mileage: new FormControl<number | null | undefined>(
+      null,
+      numberControlValidator()
+    ),
+    color: new FormControl<string | null | undefined>(null),
   });
 
   onSubmit() {
@@ -81,7 +93,7 @@ export class AddCardDialogComponent {
             },
           });
       } else {
-        console.error("Form can not be saved because of wrong input's types");
+        console.error('Form can not be saved because of wrong input types');
       }
     }
   }
