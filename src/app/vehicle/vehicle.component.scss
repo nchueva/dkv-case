@@ -13,7 +13,9 @@ $dkv-vehicle-space: vars.$dkv-vertical-space;
 .dkv-page-title {
   display: flex;
   justify-content: center;
+  text-align: center;
   margin-block: $dkv-vehicle-space;
+  margin-inline: vars.$dkv-horizontal-space-sm;
 }
 
 .dkv-vehicle-grid {
@@ -59,7 +61,7 @@ $dkv-vehicle-space: vars.$dkv-vertical-space;
   padding: 1rem;
 
   > h4 {
-    color: color.adjust(vars.$dkv-text-color, $lightness: 25);
+    color: color.adjust(vars.$dkv-text-color, $lightness: 25%);
   }
 }
 
