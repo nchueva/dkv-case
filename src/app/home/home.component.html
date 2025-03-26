@@ -1,34 +1,35 @@
 <div class="dkv-home-content">
   <div class="dkv-add-card-btn">
-    <button class="btn btn-primary me-3" (click)="addCard()">
-      Add new vehicle
-    </button>
+    <button class="btn btn-primary" (click)="addCard()">Add new vehicle</button>
   </div>
 
   @if((vehicles$ | async)?.length) {
-
-  <div class="dkv-cards-grid">
-    @for(vehicle of vehicles$ | async; track vehicle.id ){
-    <div class="card dkv-card" (click)="showDetails(vehicle)">
-      <img
-        src="/three_cars.png"
-        class="card-img-top dkv-card-image"
-        alt="Vehicle card image"
-      />
-      <div class="card-body">
-        <h5 class="card-title dkv-card-title">{{ vehicle.name }}</h5>
-        <p class="card-text">Model: {{ vehicle.model }}</p>
-        <p class="card-text">Manufacturer: {{ vehicle.manufacturer }}</p>
-        @if(vehicle.mileage) {
-        <p class="card-text">Mileage: {{ vehicle.mileage }}</p>
-        }
-        <a class="btn btn-light dkv-btn-more">more</a>
+  <div
+    class="dkv-cards-grid-container w-100 d-flex flex-grow-1 flex-column overflow-auto"
+  >
+    <div class="dkv-cards-grid">
+      @for(vehicle of vehicles$ | async; track vehicle.id ){
+      <div class="card dkv-card" (click)="showDetails(vehicle)">
+        <img
+          src="/three_cars.png"
+          class="card-img-top dkv-card-image"
+          alt="Vehicle card image"
+        />
+        <div class="card-body">
+          <h5 class="card-title dkv-card-title">{{ vehicle.name }}</h5>
+          <p class="card-text">Model: {{ vehicle.model }}</p>
+          <p class="card-text">Manufacturer: {{ vehicle.manufacturer }}</p>
+          @if(vehicle.mileage) {
+          <p class="card-text">Mileage: {{ vehicle.mileage }}</p>
+          }
+          <a class="btn btn-light dkv-btn-more">more</a>
+        </div>
       </div>
+      }
     </div>
-    }
   </div>
 
-  } @else { @if(loadingSignal()) {
+  } @else { @if(loading()) {
   <div class="dkv-center-page-positioning">Loading...</div>
   } @else {
   <div class="dkv-center-page-positioning"><h4>No items</h4></div>

@@ -1,4 +1,9 @@
-import { Component, inject, signal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  inject,
+  signal,
+} from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { catchError, map, Observable, of, switchMap, tap } from 'rxjs';
 import { Vehicle } from '../models/vehicles';
@@ -10,24 +15,26 @@ import { VehiclesApiService } from '../services/vehicles-api.service';
   imports: [AsyncPipe],
   templateUrl: './vehicle.component.html',
   styleUrl: './vehicle.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class VehicleComponent {
   private readonly activateRout = inject(ActivatedRoute);
   private readonly vehiclesApiService = inject(VehiclesApiService);
 
   vehicle$: Observable<Vehicle | undefined>;
-  loading = signal(false);
+  private loadingSignal = signal(false);
+  loading = this.loadingSignal.asReadonly();
 
   constructor() {
     this.vehicle$ = this.activateRout.queryParams.pipe(
       tap(() => {
-        this.loading.set(true);
+        this.loadingSignal.set(true);
       }),
       map((params: Params) => params['carId']),
       switchMap((carId: string) =>
         this.vehiclesApiService.getVehicleById(carId)
       ),
-      tap(() => this.loading.set(false)),
+      tap(() => this.loadingSignal.set(false)),
       catchError((err) => {
         console.error('An error occurred:', err);
         return of(undefined);

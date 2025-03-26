@@ -25,7 +25,8 @@ export class HomeComponent {
   private readonly router = inject(Router);
   private readonly dialog = inject(MatDialog);
 
-  loadingSignal = signal(true);
+  private loadingSignal = signal(true);
+  loading = this.loadingSignal.asReadonly();
 
   vehicles$: Observable<Vehicle[]> = this.vehiclesApiService.getVehicles().pipe(
     tap(() => {

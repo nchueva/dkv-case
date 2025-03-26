@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import {
@@ -17,6 +17,7 @@ import { cleanFormValues, isVehicleForm } from './guard-functions';
   imports: [MatDialogModule, MatButtonModule, ReactiveFormsModule, AsyncPipe],
   templateUrl: './add-card-dialog.component.html',
   styleUrl: './add-card-dialog.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AddCardDialogComponent {
   private readonly vehiclesApiService = inject(VehiclesApiService);

@@ -11,26 +11,27 @@
   flex-direction: column;
 }
 
-.dkv-cards-grid,
+.dkv-cards-grid-container,
 .dkv-add-card-btn {
-  margin-block: vars.$dkv-vertical-space;
+  margin-block-start: vars.$dkv-vertical-space;
   padding-inline: vars.$dkv-horizontal-space;
+  &:last-child {
+    margin-block-end: vars.$dkv-vertical-space;
+  }
 }
 
 .dkv-cards-grid {
   @include cards-template-cols(30rem);
-
   display: grid;
   width: 100%;
+  height: 100%;
   grid-template-rows: max-content;
   grid-gap: vars.$dkv-vertical-space;
-  overflow: auto;
   justify-content: center;
 }
 
 .dkv-add-card-btn {
   width: 100%;
-  grid-column: 1 / -1;
   display: flex;
   justify-content: flex-end;
 }
