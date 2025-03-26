@@ -4,8 +4,8 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { VehicleComponent } from './vehicle/vehicle.component';
 
 export const routes: Routes = [
-  { path: '', component: HomeComponent },
   { path: 'home', component: HomeComponent },
+  { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'vehicle', component: VehicleComponent },
   { path: '404-not-found', component: PageNotFoundComponent },
   { path: '**', component: PageNotFoundComponent },
