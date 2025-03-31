@@ -3,15 +3,15 @@
     <button class="btn btn-primary" (click)="addCard()">Add new vehicle</button>
   </div>
 
-  @if((vehicles$ | async)?.length) {
+  @if((vehicles$ | async); as vehicles) { @if(vehicles?.length) {
   <div
     class="dkv-cards-grid-container w-100 d-flex flex-grow-1 flex-column overflow-auto"
   >
     <div class="dkv-cards-grid">
-      @for(vehicle of vehicles$ | async; track vehicle.id ){
+      @for(vehicle of vehicles; track vehicle.id ){
       <div class="card dkv-card" (click)="showDetails(vehicle)">
         <img
-          src="/three_cars.png"
+          [src]="source"
           class="card-img-top dkv-card-image"
           alt="Vehicle card image"
         />
@@ -30,8 +30,14 @@
   </div>
 
   } @else { @if(loading()) {
-  <div class="dkv-center-page-positioning">Loading...</div>
+  <ng-container *ngTemplateOutlet="loadingTemplate"></ng-container>
   } @else {
   <div class="dkv-center-page-positioning"><h4>No items</h4></div>
-  } }
+  } } } @else {
+  <ng-container *ngTemplateOutlet="loadingTemplate"></ng-container>
+  }
 </div>
+
+<ng-template #loadingTemplate>
+  <div class="dkv-center-page-positioning">Loading...</div>
+</ng-template>

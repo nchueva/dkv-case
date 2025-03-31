@@ -9,6 +9,7 @@ import {
   switchMap,
   take,
 } from 'rxjs';
+import { HttpBackend, HttpClient } from '@angular/common/http';
 
 function sortCarsAsc(vehicles: Vehicle[]) {
   return vehicles.sort((a, b) => {
@@ -29,10 +30,15 @@ function sortCarsAsc(vehicles: Vehicle[]) {
 export class VehiclesApiService {
   private readonly vehicleService = inject(DefaultService);
   private readonly updateVehicles$$ = new BehaviorSubject<void>(undefined);
+  private readonly http = inject(HttpClient);
 
   getVehicles(): Observable<Vehicle[]> {
     return this.updateVehicles$$.pipe(
-      switchMap(() => this.vehicleService.getVehicles()),
+      switchMap(() =>
+        this.http.get<Vehicle[]>(
+          'https://67d4273b8bca322cc26c5b38.mockapi.io/vehicles'
+        )
+      ),
       map((vehicles: Vehicle[]) => {
         return sortCarsAsc(vehicles);
       }),
